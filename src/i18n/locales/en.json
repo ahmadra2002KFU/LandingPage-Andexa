@@ -6,8 +6,10 @@
   "nav": {
     "features": "Features",
     "howItWorks": "How It Works",
+    "useCases": "Use Cases",
     "security": "Security",
     "pricing": "Pricing",
+    "faq": "FAQ",
     "contact": "Contact",
     "requestDemo": "Request Demo"
   },

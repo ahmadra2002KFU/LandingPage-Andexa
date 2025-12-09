@@ -6,8 +6,10 @@
   "nav": {
     "features": "المميزات",
     "howItWorks": "كيف يعمل",
+    "useCases": "حالات الاستخدام",
     "security": "الأمان",
     "pricing": "الأسعار",
+    "faq": "الأسئلة الشائعة",
     "contact": "تواصل معنا",
     "requestDemo": "اطلب عرضًا توضيحيًا"
   },

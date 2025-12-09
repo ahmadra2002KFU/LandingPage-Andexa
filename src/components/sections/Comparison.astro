@@ -1,0 +1,240 @@
+---
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import { t, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+
+const features = [
+  'dataSovereignty',
+  'pdplCompliance',
+  'selfService',
+  'setupTime',
+  'costAtScale',
+  'arabicSupport'
+];
+
+// Define status for each feature (good, warning, bad)
+const statusMap: Record<string, Record<string, 'good' | 'warning' | 'bad'>> = {
+  dataSovereignty: { cloudAi: 'bad', traditionalBi: 'warning', andexa: 'good' },
+  pdplCompliance: { cloudAi: 'bad', traditionalBi: 'warning', andexa: 'good' },
+  selfService: { cloudAi: 'warning', traditionalBi: 'warning', andexa: 'good' },
+  setupTime: { cloudAi: 'good', traditionalBi: 'bad', andexa: 'good' },
+  costAtScale: { cloudAi: 'bad', traditionalBi: 'warning', andexa: 'good' },
+  arabicSupport: { cloudAi: 'warning', traditionalBi: 'warning', andexa: 'good' }
+};
+---
+
+<section id="comparison" class="section bg-cream-white scroll-mt-nav">
+  <Container>
+    <SectionHeading
+      title={t('comparison.headline', locale)}
+      align="center"
+    />
+
+    <!-- Desktop Table -->
+    <div class="hidden md:block max-w-5xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-slate-100">
+        <!-- Header Row -->
+        <div class="grid grid-cols-4 bg-slate-50 border-b border-slate-200">
+          <div class="p-4 lg:p-6 font-medium text-slate-500">
+            {locale === 'ar' ? 'الميزة' : 'Feature'}
+          </div>
+          <div class="p-4 lg:p-6 text-center border-x border-slate-200">
+            <div class="font-display font-semibold text-slate-700">
+              {t('comparison.cloudAi.name', locale)}
+            </div>
+            <div class="text-xs text-slate-500">
+              {t('comparison.cloudAi.subtitle', locale)}
+            </div>
+          </div>
+          <div class="p-4 lg:p-6 text-center border-e border-slate-200">
+            <div class="font-display font-semibold text-slate-700">
+              {t('comparison.traditionalBi.name', locale)}
+            </div>
+            <div class="text-xs text-slate-500">
+              {t('comparison.traditionalBi.subtitle', locale)}
+            </div>
+          </div>
+          <div class="p-4 lg:p-6 text-center bg-teal-50">
+            <div class="font-display font-semibold text-teal-700">
+              {t('comparison.andexa.name', locale)}
+            </div>
+            <div class="text-xs text-teal-600">
+              {locale === 'ar' ? 'موصى به' : 'Recommended'}
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature Rows -->
+        {features.map((feature, index) => (
+          <div class={`grid grid-cols-4 ${index < features.length - 1 ? 'border-b border-slate-100' : ''}`}>
+            <div class="p-4 lg:p-5 font-medium text-slate-700 flex items-center">
+              {t(`comparison.features.${feature}`, locale)}
+            </div>
+
+            <!-- Cloud AI -->
+            <div class="p-4 lg:p-5 text-center border-x border-slate-100 flex flex-col items-center justify-center">
+              {statusMap[feature].cloudAi === 'bad' && (
+                <svg class="w-5 h-5 text-red-500 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+              )}
+              {statusMap[feature].cloudAi === 'warning' && (
+                <svg class="w-5 h-5 text-amber-500 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              )}
+              {statusMap[feature].cloudAi === 'good' && (
+                <svg class="w-5 h-5 text-green-500 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              )}
+              <span class="text-xs text-slate-500">
+                {t(`comparison.cloudAi.values.${feature}`, locale)}
+              </span>
+            </div>
+
+            <!-- Traditional BI -->
+            <div class="p-4 lg:p-5 text-center border-e border-slate-100 flex flex-col items-center justify-center">
+              {statusMap[feature].traditionalBi === 'bad' && (
+                <svg class="w-5 h-5 text-red-500 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+              )}
+              {statusMap[feature].traditionalBi === 'warning' && (
+                <svg class="w-5 h-5 text-amber-500 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              )}
+              {statusMap[feature].traditionalBi === 'good' && (
+                <svg class="w-5 h-5 text-green-500 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              )}
+              <span class="text-xs text-slate-500">
+                {t(`comparison.traditionalBi.values.${feature}`, locale)}
+              </span>
+            </div>
+
+            <!-- ANDEXA -->
+            <div class="p-4 lg:p-5 text-center bg-teal-50 flex flex-col items-center justify-center">
+              <svg class="w-5 h-5 text-teal-600 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span class="text-xs text-teal-700 font-medium">
+                {t(`comparison.andexa.values.${feature}`, locale)}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile Cards -->
+    <div class="md:hidden space-y-4">
+      <!-- Cloud AI Card -->
+      <div class="bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100">
+          <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-display font-semibold text-slate-700">{t('comparison.cloudAi.name', locale)}</h4>
+            <p class="text-xs text-slate-500">{t('comparison.cloudAi.subtitle', locale)}</p>
+          </div>
+        </div>
+        <ul class="space-y-3">
+          {features.map(feature => (
+            <li class="flex items-start gap-2 text-sm">
+              {statusMap[feature].cloudAi === 'bad' && (
+                <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              )}
+              {statusMap[feature].cloudAi === 'warning' && (
+                <svg class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                </svg>
+              )}
+              {statusMap[feature].cloudAi === 'good' && (
+                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              )}
+              <span class="text-slate-600">{t(`comparison.cloudAi.values.${feature}`, locale)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Traditional BI Card -->
+      <div class="bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100">
+          <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-display font-semibold text-slate-700">{t('comparison.traditionalBi.name', locale)}</h4>
+            <p class="text-xs text-slate-500">{t('comparison.traditionalBi.subtitle', locale)}</p>
+          </div>
+        </div>
+        <ul class="space-y-3">
+          {features.map(feature => (
+            <li class="flex items-start gap-2 text-sm">
+              {statusMap[feature].traditionalBi === 'bad' && (
+                <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              )}
+              {statusMap[feature].traditionalBi === 'warning' && (
+                <svg class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                </svg>
+              )}
+              {statusMap[feature].traditionalBi === 'good' && (
+                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              )}
+              <span class="text-slate-600">{t(`comparison.traditionalBi.values.${feature}`, locale)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- ANDEXA Card (Highlighted) -->
+      <div class="bg-teal-700 rounded-2xl p-5 shadow-xl text-white">
+        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-teal-600">
+          <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-display font-semibold">{t('comparison.andexa.name', locale)}</h4>
+            <p class="text-xs text-teal-200">{locale === 'ar' ? 'موصى به' : 'Recommended'}</p>
+          </div>
+        </div>
+        <ul class="space-y-3">
+          {features.map(feature => (
+            <li class="flex items-start gap-2 text-sm">
+              <svg class="w-4 h-4 text-cyan-300 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span class="text-teal-100">{t(`comparison.andexa.values.${feature}`, locale)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,185 @@
+---
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import { t, tArray, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+
+const faqItems = tArray('faq.items', locale) as Array<{ question: string; answer: string }>;
+
+// Split items into two columns for desktop
+const midPoint = Math.ceil((faqItems?.length || 0) / 2);
+const leftColumn = faqItems?.slice(0, midPoint) || [];
+const rightColumn = faqItems?.slice(midPoint) || [];
+---
+
+<section id="faq" class="section bg-slate-50 scroll-mt-nav">
+  <Container>
+    <SectionHeading
+      title={t('faq.headline', locale)}
+      align="center"
+    />
+
+    <!-- Two Column Layout (Desktop) -->
+    <div class="grid md:grid-cols-2 gap-4 lg:gap-6 max-w-5xl mx-auto">
+      <!-- Left Column -->
+      <div class="space-y-4">
+        {leftColumn.map((item, index) => (
+          <div class="faq-item bg-white rounded-xl shadow-card border border-slate-100 overflow-hidden">
+            <button
+              class="faq-trigger w-full flex items-center justify-between p-5 text-start hover:bg-slate-50 transition-colors"
+              aria-expanded="false"
+              aria-controls={`faq-content-${index}`}
+            >
+              <span class="font-display font-semibold text-slate-900 pe-4">
+                {item.question}
+              </span>
+              <span class="faq-icon w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform">
+                <svg class="w-4 h-4 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line class="faq-horizontal" x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </span>
+            </button>
+            <div
+              id={`faq-content-${index}`}
+              class="faq-content hidden"
+              aria-hidden="true"
+            >
+              <div class="px-5 pb-5 pt-0 border-s-4 border-s-teal-500 ms-5">
+                <p class="text-slate-600 leading-relaxed">
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-4">
+        {rightColumn.map((item, index) => (
+          <div class="faq-item bg-white rounded-xl shadow-card border border-slate-100 overflow-hidden">
+            <button
+              class="faq-trigger w-full flex items-center justify-between p-5 text-start hover:bg-slate-50 transition-colors"
+              aria-expanded="false"
+              aria-controls={`faq-content-right-${index}`}
+            >
+              <span class="font-display font-semibold text-slate-900 pe-4">
+                {item.question}
+              </span>
+              <span class="faq-icon w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform">
+                <svg class="w-4 h-4 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line class="faq-horizontal" x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </span>
+            </button>
+            <div
+              id={`faq-content-right-${index}`}
+              class="faq-content hidden"
+              aria-hidden="true"
+            >
+              <div class="px-5 pb-5 pt-0 border-s-4 border-s-teal-500 ms-5">
+                <p class="text-slate-600 leading-relaxed">
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Still Have Questions CTA -->
+    <div class="text-center mt-10">
+      <p class="text-slate-600 mb-4">
+        {locale === 'ar' ? 'لا تزال لديك أسئلة؟' : 'Still have questions?'}
+      </p>
+      <a
+        href="#contact"
+        class="inline-flex items-center gap-2 px-6 py-3 bg-teal-700 text-white rounded-xl font-medium hover:bg-teal-800 transition-colors shadow-md hover:shadow-lg"
+      >
+        {locale === 'ar' ? 'تواصل معنا' : 'Contact Us'}
+        <svg class="w-4 h-4 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </Container>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const trigger = item.querySelector('.faq-trigger');
+      const content = item.querySelector('.faq-content');
+      const icon = item.querySelector('.faq-icon');
+      const horizontalLine = item.querySelector('.faq-horizontal');
+
+      if (!trigger || !content) return;
+
+      trigger.addEventListener('click', () => {
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Toggle current item
+        trigger.setAttribute('aria-expanded', String(!isExpanded));
+        content.setAttribute('aria-hidden', String(isExpanded));
+
+        if (isExpanded) {
+          content.classList.add('hidden');
+          icon?.classList.remove('rotate-45');
+          if (horizontalLine) horizontalLine.style.opacity = '1';
+        } else {
+          content.classList.remove('hidden');
+          icon?.classList.add('rotate-45');
+          if (horizontalLine) horizontalLine.style.opacity = '0';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .faq-icon {
+    transition: transform 0.2s ease;
+  }
+
+  .faq-icon.rotate-45 {
+    transform: rotate(45deg);
+  }
+
+  .faq-horizontal {
+    transition: opacity 0.2s ease;
+  }
+
+  .faq-content {
+    animation: slideDown 0.2s ease;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-icon,
+    .faq-horizontal,
+    .faq-content {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>

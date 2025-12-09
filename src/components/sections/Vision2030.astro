@@ -1,0 +1,121 @@
+---
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import { t, tArray, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+
+const points = tArray('vision2030.points', locale);
+
+const stats = [
+  { key: 'investment', icon: 'trending-up' },
+  { key: 'digitalHealth', icon: 'heart' },
+  { key: 'hospitals', icon: 'building' },
+  { key: 'aiAdoption', icon: 'cpu' }
+];
+---
+
+<section id="vision-2030" class="section bg-gradient-to-br from-teal-900 via-teal-800 to-teal-900 text-white scroll-mt-nav relative overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="geometric-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path d="M30 0L60 30L30 60L0 30Z" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="30" cy="30" r="5" fill="none" stroke="currentColor" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#geometric-pattern)"/>
+    </svg>
+  </div>
+
+  <!-- Gold Accent Lines -->
+  <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-sand-gold to-transparent"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-sand-gold to-transparent"></div>
+
+  <Container class="relative z-10">
+    <!-- Header with Saudi Flag -->
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-3 px-4 py-2 bg-white/10 rounded-full mb-6 backdrop-blur-sm">
+        <!-- Saudi Flag Colors (simplified) -->
+        <div class="flex items-center gap-1">
+          <div class="w-6 h-4 bg-green-600 rounded-sm flex items-center justify-center">
+            <svg class="w-3 h-2 text-white" viewBox="0 0 24 16" fill="currentColor">
+              <text x="2" y="12" font-size="10" font-family="serif">&#x0633;&#x0639;</text>
+            </svg>
+          </div>
+        </div>
+        <span class="text-sand-gold font-medium text-sm">
+          {locale === 'ar' ? 'فخورون بكوننا سعوديين' : 'Proudly Saudi'}
+        </span>
+      </div>
+
+      <h2 class="text-section-title font-display font-semibold text-white mb-4">
+        {t('vision2030.headline', locale)}
+      </h2>
+
+      <p class="text-lg text-teal-200 max-w-2xl mx-auto">
+        {t('vision2030.mission', locale)}
+      </p>
+    </div>
+
+    <!-- Key Points -->
+    <div class="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto mb-12">
+      {points && points.map((point: string, index: number) => (
+        <div class="flex items-start gap-4 bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10 hover:bg-white/10 transition-colors">
+          <div class="w-8 h-8 bg-sand-gold/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-sand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <p class="text-teal-100 leading-relaxed">{point}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+      {stats.map((stat) => (
+        <div class="text-center bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <!-- Icon -->
+          <div class="w-12 h-12 mx-auto mb-4 bg-sand-gold/20 rounded-xl flex items-center justify-center">
+            {stat.icon === 'trending-up' && (
+              <svg class="w-6 h-6 text-sand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+              </svg>
+            )}
+            {stat.icon === 'heart' && (
+              <svg class="w-6 h-6 text-sand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            )}
+            {stat.icon === 'building' && (
+              <svg class="w-6 h-6 text-sand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"/>
+              </svg>
+            )}
+            {stat.icon === 'cpu' && (
+              <svg class="w-6 h-6 text-sand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+              </svg>
+            )}
+          </div>
+
+          <!-- Value -->
+          <div class="text-3xl lg:text-4xl font-display font-bold text-sand-gold mb-2 ltr-number" data-count-to={t(`vision2030.stats.${stat.key}.value`, locale)}>
+            {t(`vision2030.stats.${stat.key}.value`, locale)}
+          </div>
+
+          <!-- Label -->
+          <p class="text-sm text-teal-200">
+            {t(`vision2030.stats.${stat.key}.label`, locale)}
+          </p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
