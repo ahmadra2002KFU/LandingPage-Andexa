@@ -1,0 +1,385 @@
+{
+  "meta": {
+    "title": "ANDEXA | Sovereign AI Analytics for Saudi Healthcare",
+    "description": "ANDEXA is an on-premises AI analytics agent for Saudi hospitals. Ask your data questions in Arabic or English, get instant reports—100% sovereign, PDPL compliant."
+  },
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "security": "Security",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "requestDemo": "Request Demo"
+  },
+  "hero": {
+    "headline": "Ask Your Data. Get Answers in Seconds.",
+    "subheadline": "ANDEXA is a sovereign AI analytics agent that turns your hospital's fragmented data into instant, actionable insights—100% on-premises, zero data egress.",
+    "cta": {
+      "primary": "Request a Demo",
+      "secondary": "See How It Works"
+    }
+  },
+  "problem": {
+    "headline": "Your Data is Trapped. Your Teams are Waiting.",
+    "executive": {
+      "title": "The Executive Pain",
+      "description": "Strategic decisions are delayed by weeks because KPIs must be manually reconciled across conflicting Excel sheets, HIS systems, and ERP databases."
+    },
+    "organizational": {
+      "title": "The Organizational Pain",
+      "description": "Non-technical staff—HR, Procurement, Head Nurses—cannot access data directly. They submit \"tickets\" to IT and wait 5+ days for simple reports.",
+      "quote": "A Nursing Director waits 5 days for a 'Staff Overtime vs. Patient Volume' report, delaying critical rostering decisions."
+    },
+    "regulatory": {
+      "title": "The Regulatory Wall",
+      "description": "Public cloud AI (ChatGPT, Claude, etc.) is banned for patient data under PDPL. Hospitals are left with rigid, legacy tools that can't keep up."
+    },
+    "stat": {
+      "value": "62%",
+      "label": "of Saudi firms cite data privacy concerns as the #1 barrier to AI adoption"
+    }
+  },
+  "solution": {
+    "headline": "Sovereign Self-Service Intelligence",
+    "tagline": "An on-premises AI analyst available 24/7 to your entire organization.",
+    "pillars": {
+      "askData": {
+        "title": "Ask Your Data",
+        "description": "Natural language queries for any authorized user—from CEO to Head Nurse. No SQL. No tickets. Just answers."
+      },
+      "onPremises": {
+        "title": "100% On-Premises",
+        "description": "Air-gapped deployment. Your data never leaves your facility. Full PDPL and NCA compliance."
+      },
+      "universal": {
+        "title": "Universal Ingestion",
+        "description": "Connects to Excel, SQL, Oracle, HIS, ERP, HL7/FHIR—in minutes, not months."
+      }
+    },
+    "dualInterface": {
+      "commandCenter": {
+        "title": "Command Center View",
+        "description": "Real-time strategic correlations and KPI dashboards for C-Suite executives."
+      },
+      "chat": {
+        "title": "\"Ask Your Data\" Chat",
+        "description": "A secure natural language interface for operational users across all departments."
+      }
+    }
+  },
+  "howItWorks": {
+    "headline": "From Question to Insight in 3 Steps",
+    "steps": {
+      "connect": {
+        "title": "Connect",
+        "description": "ANDEXA ingests your existing data sources—Excel, SQL, Oracle, HIS, ERP, HL7/FHIR. No migration required. No disruption to your current systems."
+      },
+      "ask": {
+        "title": "Ask",
+        "description": "Users query data in plain Arabic or English.",
+        "examples": [
+          "Show ICU bed occupancy vs. staffing levels this week",
+          "What are the top 5 consumable costs in Emergency this month?",
+          "Compare revenue per bed across all departments this quarter"
+        ]
+      },
+      "act": {
+        "title": "Act",
+        "description": "Receive instant reports, interactive dashboards, and exportable analytics. Make decisions in minutes, not weeks."
+      }
+    }
+  },
+  "benefits": {
+    "headline": "Why Healthcare Leaders Choose ANDEXA",
+    "items": {
+      "itBacklog": {
+        "title": "Reduce IT Backlog by 40%",
+        "description": "Offload routine reporting requests. Free your IT team to focus on strategic initiatives."
+      },
+      "instantRoi": {
+        "title": "Instant ROI",
+        "description": "Turn passive data storage into active operational intelligence. See value from day one."
+      },
+      "pdplCompliant": {
+        "title": "PDPL & NCA Compliant",
+        "description": "Native alignment with Saudi data protection and cybersecurity regulations. Built for compliance."
+      },
+      "rbac": {
+        "title": "Role-Based Access",
+        "description": "Users only \"chat\" with data they're authorized to see. HR can't access clinical records. Full RBAC."
+      },
+      "costAdvantage": {
+        "title": "500x Cost Advantage",
+        "description": "Compared to cloud API solutions at volume. No token fees. No egress charges. Flat, predictable pricing."
+      },
+      "arabicNlp": {
+        "title": "Arabic-First NLP",
+        "description": "Built from the ground up for Arabic language queries and reports."
+      }
+    }
+  },
+  "useCases": {
+    "headline": "Built for Every Role in Your Organization",
+    "roles": {
+      "ceo": {
+        "title": "CEO",
+        "query": "Compare revenue per bed across all departments this quarter",
+        "value": "Strategic oversight in real-time"
+      },
+      "cfo": {
+        "title": "CFO",
+        "query": "Show me top 5 cost overruns vs. budget YTD",
+        "value": "Instant financial visibility"
+      },
+      "coo": {
+        "title": "COO",
+        "query": "What's our average patient wait time by department this month?",
+        "value": "Operational efficiency tracking"
+      },
+      "nursingDirector": {
+        "title": "Nursing Director",
+        "query": "Staff overtime vs. patient volume—last 30 days",
+        "value": "Data-driven rostering decisions"
+      },
+      "hr": {
+        "title": "HR Manager",
+        "query": "Show employee turnover rate by department, 2024",
+        "value": "Workforce planning insights"
+      },
+      "procurement": {
+        "title": "Procurement",
+        "query": "Which consumables exceeded reorder thresholds this month?",
+        "value": "Inventory optimization"
+      }
+    },
+    "transformation": {
+      "before": {
+        "title": "Before ANDEXA",
+        "items": [
+          "Submit IT ticket",
+          "Wait 5+ days",
+          "Static PDF reports",
+          "Data locked in silos",
+          "Excel reconciliation headaches"
+        ]
+      },
+      "after": {
+        "title": "After ANDEXA",
+        "items": [
+          "Ask directly",
+          "Get answers in seconds",
+          "Interactive dashboards",
+          "Unified intelligence",
+          "Automated correlation"
+        ]
+      }
+    }
+  },
+  "security": {
+    "headline": "Sovereign by Design",
+    "features": {
+      "onPremises": {
+        "title": "100% On-Premises",
+        "description": "Deployed entirely within your data center or private cloud. No external dependencies."
+      },
+      "zeroEgress": {
+        "title": "Zero Data Egress",
+        "description": "Your data never leaves your facility. Ever. Air-gapped architecture ensures complete isolation."
+      },
+      "pdpl": {
+        "title": "PDPL Compliant",
+        "description": "Native alignment with Saudi Arabia's Personal Data Protection Law. Patient data stays protected."
+      },
+      "nca": {
+        "title": "NCA ECC Aligned",
+        "description": "Designed to meet the National Cybersecurity Authority's Essential Cybersecurity Controls."
+      },
+      "rbac": {
+        "title": "Role-Based Access Control",
+        "description": "Granular permissions ensure users only access data they're authorized to see. Full audit trails."
+      }
+    },
+    "badges": [
+      "PDPL Compliant",
+      "NCA ECC Aligned",
+      "Vision 2030 Ready",
+      "Air-Gapped Deployment",
+      "Full Audit Logging"
+    ]
+  },
+  "comparison": {
+    "headline": "Why Not Just Use ChatGPT or Power BI?",
+    "features": {
+      "dataSovereignty": "Data Sovereignty",
+      "pdplCompliance": "PDPL Compliance",
+      "selfService": "Self-Service",
+      "setupTime": "Setup Time",
+      "costAtScale": "Cost at Scale",
+      "arabicSupport": "Arabic Support"
+    },
+    "cloudAi": {
+      "name": "Cloud AI",
+      "subtitle": "ChatGPT, etc.",
+      "values": {
+        "dataSovereignty": "Data sent to US servers",
+        "pdplCompliance": "Banned for patient data",
+        "selfService": "Requires copy/paste",
+        "setupTime": "Minutes",
+        "costAtScale": "Token fees explode",
+        "arabicSupport": "Limited"
+      }
+    },
+    "traditionalBi": {
+      "name": "Traditional BI",
+      "subtitle": "Tableau, Power BI",
+      "values": {
+        "dataSovereignty": "Requires cloud for AI features",
+        "pdplCompliance": "Complex configuration",
+        "selfService": "Requires training",
+        "setupTime": "Weeks to months",
+        "costAtScale": "License + cloud",
+        "arabicSupport": "Limited"
+      }
+    },
+    "andexa": {
+      "name": "ANDEXA",
+      "values": {
+        "dataSovereignty": "100% on-premises",
+        "pdplCompliance": "Native compliance",
+        "selfService": "Natural language",
+        "setupTime": "Days",
+        "costAtScale": "Flat rate",
+        "arabicSupport": "Native"
+      }
+    }
+  },
+  "vision2030": {
+    "headline": "Built in Saudi Arabia, for Saudi Arabia",
+    "mission": "ANDEXA was designed from the ground up to meet the unique requirements of Saudi healthcare:",
+    "points": [
+      "Arabic-First NLP — Natural language processing optimized for Arabic queries and reports",
+      "Full Data Sovereignty — Your data stays in the Kingdom, always",
+      "Vision 2030 Alignment — Supporting the National Transformation Program's digital health goals",
+      "Local Expertise — Built by a team that understands Saudi healthcare regulations and workflows"
+    ],
+    "stats": {
+      "investment": {
+        "value": "SAR 214B+",
+        "label": "invested in health and social development"
+      },
+      "digitalHealth": {
+        "value": "SAR 5.6B",
+        "label": "allocated to digital health transformation"
+      },
+      "hospitals": {
+        "value": "516",
+        "label": "hospitals in the Kingdom"
+      },
+      "aiAdoption": {
+        "value": "81%",
+        "label": "of Saudi enterprises deploying AI"
+      }
+    }
+  },
+  "pricing": {
+    "headline": "Predictable Pricing. No Token Surprises.",
+    "description": "Unlike cloud AI solutions that charge per token (costs that explode at scale), ANDEXA offers flat annual licensing with unlimited queries.",
+    "included": [
+      "Unlimited natural language queries",
+      "All data connectors",
+      "Arabic & English support",
+      "Role-based access control",
+      "Implementation support",
+      "Training for your team",
+      "Ongoing updates and support"
+    ],
+    "cta": "Request Pricing"
+  },
+  "faq": {
+    "headline": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "How long does deployment take?",
+        "answer": "Typical deployment takes 2-4 weeks, including data connector configuration and user training. We can have a proof-of-concept running in days."
+      },
+      {
+        "question": "What data sources can ANDEXA connect to?",
+        "answer": "ANDEXA connects to virtually any structured data source: Excel, SQL databases, Oracle, HIS/EHR systems, ERP platforms, HL7/FHIR feeds, and REST APIs."
+      },
+      {
+        "question": "Is ANDEXA compliant with Saudi regulations?",
+        "answer": "Yes. ANDEXA is designed for PDPL (Personal Data Protection Law) compliance and NCA ECC (Essential Cybersecurity Controls) alignment. Data never leaves your premises."
+      },
+      {
+        "question": "Do users need technical training?",
+        "answer": "No. ANDEXA uses natural language—users simply type questions in Arabic or English. If you can send a text message, you can use ANDEXA."
+      },
+      {
+        "question": "What about data security?",
+        "answer": "ANDEXA deploys 100% on-premises or in your private cloud. There is zero data egress. Role-based access control ensures users only see authorized data. Full audit logging is included."
+      },
+      {
+        "question": "How does pricing work?",
+        "answer": "We offer annual licensing with unlimited queries—no per-token fees. Contact us for a quote based on your organization's needs."
+      },
+      {
+        "question": "Can ANDEXA integrate with our existing BI tools?",
+        "answer": "Yes. ANDEXA complements existing dashboards (Tableau, Power BI) by adding natural language query capabilities and automating report generation."
+      }
+    ]
+  },
+  "cta": {
+    "headline": "Ready to Unlock Your Data?",
+    "subheadline": "See how ANDEXA can transform your hospital's data into instant, actionable intelligence—without compromising on security.",
+    "options": {
+      "demo": "Request a Demo",
+      "technical": "Download Technical Brief",
+      "contact": "Contact Us"
+    }
+  },
+  "contact": {
+    "headline": "Get in Touch",
+    "form": {
+      "name": "Name",
+      "organization": "Organization",
+      "role": "Role / Title",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message / Questions",
+      "submit": "Send Message",
+      "required": "Required"
+    },
+    "success": "Thank you for your message. We'll be in touch soon.",
+    "error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "tagline": "Proudly Sovereign",
+    "company": {
+      "title": "Company",
+      "about": "About ANDEXA",
+      "mission": "Our Mission",
+      "careers": "Careers",
+      "contact": "Contact"
+    },
+    "product": {
+      "title": "Product",
+      "features": "Features",
+      "security": "Security",
+      "integrations": "Integrations",
+      "pricing": "Pricing"
+    },
+    "resources": {
+      "title": "Resources",
+      "documentation": "Documentation",
+      "caseStudies": "Case Studies",
+      "blog": "Blog",
+      "support": "Support"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "© 2025 ANDEXA. All rights reserved."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "andexa-landing",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "ANDEXA - Sovereign AI Analytics for Saudi Healthcare",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.0",
+    "@astrojs/react": "^3.6.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.460.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.3"
+  }
+}

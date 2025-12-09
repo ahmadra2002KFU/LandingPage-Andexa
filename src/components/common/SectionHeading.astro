@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  class?: string;
+  titleClass?: string;
+  subtitleClass?: string;
+  animate?: boolean;
+}
+
+const {
+  title,
+  subtitle,
+  align = 'center',
+  class: className = '',
+  titleClass = '',
+  subtitleClass = '',
+  animate = true
+} = Astro.props;
+
+const alignClasses = {
+  left: 'text-start',
+  center: 'text-center mx-auto'
+};
+
+const containerClasses = [
+  'mb-8 md:mb-10 max-w-3xl',
+  alignClasses[align],
+  animate && 'animate-on-scroll',
+  className
+].filter(Boolean).join(' ');
+---
+
+<div class={containerClasses}>
+  <h2 class={`text-section-title font-display font-semibold text-slate-950 mb-4 ${titleClass}`}>
+    {title}
+  </h2>
+  {subtitle && (
+    <p class={`text-body-lg text-slate-600 ${subtitleClass}`}>
+      {subtitle}
+    </p>
+  )}
+  <slot />
+</div>

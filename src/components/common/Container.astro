@@ -1,0 +1,34 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  padding?: boolean;
+  class?: string;
+  as?: 'div' | 'section' | 'article';
+}
+
+const {
+  size = 'lg',
+  padding = true,
+  class: className = '',
+  as: Tag = 'div'
+} = Astro.props;
+
+const sizes = {
+  sm: 'max-w-2xl',      // 672px
+  md: 'max-w-4xl',      // 896px
+  lg: 'max-w-6xl',      // 1152px
+  xl: 'max-w-7xl',      // 1280px
+  full: 'max-w-[1440px]'
+};
+
+const classes = [
+  'mx-auto w-full',
+  sizes[size],
+  padding && 'px-4 sm:px-6 lg:px-8',
+  className
+].filter(Boolean).join(' ');
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>

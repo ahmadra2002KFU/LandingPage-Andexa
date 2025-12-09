@@ -1,0 +1,97 @@
+---
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import { t, tArray, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+
+const features = ['onPremises', 'zeroEgress', 'pdpl', 'nca', 'rbac'];
+const badges = tArray<string>('security.badges', locale);
+---
+
+<section id="security" class="section bg-slate-950 text-white scroll-mt-nav overflow-hidden">
+  <Container>
+    <SectionHeading
+      title={t('security.headline', locale)}
+      align="center"
+      titleClass="text-white"
+    />
+
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Left: Shield Visualization -->
+      <div class="relative flex justify-center animate-on-scroll">
+        <!-- Glow effect -->
+        <div class="absolute inset-0 bg-teal-500/20 blur-3xl rounded-full"></div>
+
+        <!-- Shield Container -->
+        <div class="relative">
+          <!-- Animated rings -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-64 h-64 border border-teal-500/30 rounded-full animate-pulse-glow"></div>
+            <div class="absolute w-80 h-80 border border-cyan-500/20 rounded-full animate-pulse-glow delay-300"></div>
+            <div class="absolute w-96 h-96 border border-teal-500/10 rounded-full animate-pulse-glow delay-500"></div>
+          </div>
+
+          <!-- Central Shield -->
+          <div class="relative w-48 h-48 flex items-center justify-center">
+            <svg class="w-32 h-32 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4" stroke-width="2"/>
+            </svg>
+          </div>
+
+          <!-- Orbiting Badges -->
+          {badges.slice(0, 5).map((badge, i) => {
+            const angle = (i * 72 - 90) * (Math.PI / 180);
+            const radius = 160;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+
+            return (
+              <div
+                class="absolute bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-cyan-300 border border-cyan-500/30 whitespace-nowrap"
+                style={`transform: translate(${x}px, ${y}px); left: 50%; top: 50%; margin-left: -50px; margin-top: -12px;`}
+              >
+                <span class="text-green-400 me-1">✓</span>
+                {badge}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- Right: Feature List -->
+      <div class="space-y-6 stagger-children">
+        {features.map((feature) => (
+          <div class="flex gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+            <div class="shrink-0 w-10 h-10 bg-teal-600/30 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4"/>
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">
+                {t(`security.features.${feature}.title`, locale)}
+              </h4>
+              <p class="text-slate-400 text-sm">
+                {t(`security.features.${feature}.description`, locale)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  @keyframes orbit {
+    from { transform: rotate(0deg) translateX(160px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(160px) rotate(-360deg); }
+  }
+</style>

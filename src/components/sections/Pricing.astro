@@ -1,0 +1,117 @@
+---
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import Button from '../common/Button.astro';
+import { t, tArray, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const includedItems = tArray<string>('pricing.included', locale);
+---
+
+<section id="pricing" class="section bg-cream-white scroll-mt-nav">
+  <Container size="md">
+    <SectionHeading
+      title={t('pricing.headline', locale)}
+      subtitle={t('pricing.description', locale)}
+      align="center"
+    />
+
+    <!-- Pricing Card -->
+    <div class="relative max-w-xl mx-auto animate-on-scroll">
+      <!-- Glow -->
+      <div class="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-cyan-400/20 rounded-3xl blur-2xl"></div>
+
+      <!-- Card -->
+      <div class="relative bg-white rounded-3xl p-8 lg:p-10 shadow-xl border-t-4 border-teal-600">
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            {locale === 'ar' ? 'ترخيص سنوي ثابت' : 'Flat Annual License'}
+          </div>
+
+          <h3 class="text-2xl font-display font-bold text-slate-900 mb-2">
+            {locale === 'ar' ? 'استعلامات غير محدودة' : 'Unlimited Queries'}
+          </h3>
+          <p class="text-slate-500">
+            {locale === 'ar' ? 'لا رسوم توكن، لا مفاجآت' : 'No token fees, no surprises'}
+          </p>
+        </div>
+
+        <!-- Features List -->
+        <ul class="space-y-4 mb-8">
+          {includedItems.map((item) => (
+            <li class="flex items-start gap-3">
+              <div class="shrink-0 w-5 h-5 bg-teal-100 rounded-full flex items-center justify-center mt-0.5">
+                <svg class="w-3 h-3 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <span class="text-slate-700">{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <!-- CTA -->
+        <Button href="#contact" class="w-full justify-center" size="lg">
+          {t('pricing.cta', locale)}
+          <svg class="w-5 h-5 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </Button>
+      </div>
+    </div>
+
+    <!-- Cost Comparison Visual -->
+    <div class="mt-16 max-w-2xl mx-auto animate-on-scroll">
+      <h4 class="text-center text-slate-500 text-sm font-medium mb-6">
+        {locale === 'ar' ? 'مقارنة التكلفة على نطاق واسع' : 'Cost Comparison at Scale'}
+      </h4>
+
+      <div class="bg-white rounded-2xl p-6 shadow-card">
+        <div class="flex items-end justify-between h-40 gap-8">
+          <!-- Token-based -->
+          <div class="flex-1 flex flex-col items-center">
+            <div class="w-full bg-red-100 rounded-t-lg relative" style="height: 100%">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <svg class="w-8 h-8 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20M2 12h20"/>
+                </svg>
+              </div>
+            </div>
+            <span class="mt-3 text-sm text-slate-600 text-center">
+              {locale === 'ar' ? 'رسوم التوكن' : 'Token Fees'}
+            </span>
+          </div>
+
+          <!-- ANDEXA -->
+          <div class="flex-1 flex flex-col items-center">
+            <div class="w-full bg-teal-100 rounded-t-lg relative" style="height: 25%">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <svg class="w-6 h-6 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+            </div>
+            <span class="mt-3 text-sm text-slate-600 text-center font-medium text-teal-700">
+              ANDEXA
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 text-center">
+          <span class="inline-flex items-center gap-2 text-teal-700 font-semibold">
+            <span class="text-2xl ltr-number">500x</span>
+            <span class="text-sm">{locale === 'ar' ? 'ميزة تكلفة' : 'cost advantage'}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,99 @@
+---
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import { t, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+
+const benefits = [
+  { key: 'itBacklog', icon: 'zap', featured: true },
+  { key: 'instantRoi', icon: 'chart', featured: false },
+  { key: 'pdplCompliant', icon: 'shield', featured: false },
+  { key: 'rbac', icon: 'lock', featured: false },
+  { key: 'costAdvantage', icon: 'coins', featured: true },
+  { key: 'arabicNlp', icon: 'globe', featured: false },
+];
+---
+
+<section class="section bg-cream-white scroll-mt-nav">
+  <Container>
+    <SectionHeading
+      title={t('benefits.headline', locale)}
+      align="center"
+    />
+
+    <!-- Bento Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 stagger-children">
+      {benefits.map((benefit, index) => (
+        <div
+          class={`rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 ${
+            benefit.featured
+              ? 'bg-teal-700 text-white shadow-xl'
+              : 'bg-white shadow-card hover:shadow-card-hover border border-slate-100'
+          } ${index === 0 ? 'md:col-span-2 lg:col-span-1' : ''}`}
+        >
+          <!-- Icon -->
+          <div class={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+            benefit.featured ? 'bg-white/20' : 'bg-teal-100'
+          }`}>
+            {benefit.icon === 'zap' && (
+              <svg class={`w-6 h-6 ${benefit.featured ? 'text-white' : 'text-teal-700'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            )}
+            {benefit.icon === 'chart' && (
+              <svg class={`w-6 h-6 ${benefit.featured ? 'text-white' : 'text-teal-700'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            )}
+            {benefit.icon === 'shield' && (
+              <svg class={`w-6 h-6 ${benefit.featured ? 'text-white' : 'text-teal-700'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            )}
+            {benefit.icon === 'lock' && (
+              <svg class={`w-6 h-6 ${benefit.featured ? 'text-white' : 'text-teal-700'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            )}
+            {benefit.icon === 'coins' && (
+              <svg class={`w-6 h-6 ${benefit.featured ? 'text-white' : 'text-teal-700'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="8" cy="8" r="6"/>
+                <path d="M18.09 10.37A6 6 0 1 1 10.34 18"/>
+                <path d="M7 6h1v4"/>
+                <path d="M16.71 13.88l.7.71-2.82 2.82"/>
+              </svg>
+            )}
+            {benefit.icon === 'globe' && (
+              <svg class={`w-6 h-6 ${benefit.featured ? 'text-white' : 'text-teal-700'}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            )}
+          </div>
+
+          <h3 class={`text-xl font-display font-semibold mb-2 ${
+            benefit.featured ? 'text-white' : 'text-slate-900'
+          }`}>
+            {t(`benefits.items.${benefit.key}.title`, locale)}
+          </h3>
+
+          <p class={`leading-relaxed ${
+            benefit.featured ? 'text-teal-100' : 'text-slate-600'
+          }`}>
+            {t(`benefits.items.${benefit.key}.description`, locale)}
+          </p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

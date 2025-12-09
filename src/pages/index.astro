@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import Problem from '../components/sections/Problem.astro';
+import Solution from '../components/sections/Solution.astro';
+import Benefits from '../components/sections/Benefits.astro';
+import Security from '../components/sections/Security.astro';
+import Pricing from '../components/sections/Pricing.astro';
+import Contact from '../components/sections/Contact.astro';
+
+const locale = 'en';
+---
+
+<BaseLayout locale={locale}>
+  <Header slot="header" locale={locale} />
+
+  <Hero locale={locale} />
+  <Problem locale={locale} />
+  <Solution locale={locale} />
+  <Benefits locale={locale} />
+  <Security locale={locale} />
+  <Pricing locale={locale} />
+  <Contact locale={locale} />
+
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>

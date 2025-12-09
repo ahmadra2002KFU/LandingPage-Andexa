@@ -1,0 +1,212 @@
+---
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import { t, tArray, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+
+const roles = ['ceo', 'cfo', 'coo', 'nursingDirector', 'hr', 'procurement'];
+
+const beforeItems = tArray('useCases.transformation.before.items', locale);
+const afterItems = tArray('useCases.transformation.after.items', locale);
+---
+
+<section id="use-cases" class="section bg-slate-50 scroll-mt-nav">
+  <Container>
+    <SectionHeading
+      title={t('useCases.headline', locale)}
+      align="center"
+    />
+
+    <!-- Role Selector Tabs -->
+    <div class="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="Select role">
+      {roles.map((role, index) => (
+        <button
+          class={`role-tab px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+            index === 0
+              ? 'bg-teal-700 text-white shadow-md'
+              : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+          }`}
+          data-role={role}
+          role="tab"
+          aria-selected={index === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${role}`}
+        >
+          {t(`useCases.roles.${role}.title`, locale)}
+        </button>
+      ))}
+    </div>
+
+    <!-- Role Content Cards -->
+    <div class="max-w-3xl mx-auto mb-12">
+      {roles.map((role, index) => (
+        <div
+          id={`panel-${role}`}
+          class={`role-panel bg-white rounded-2xl p-6 lg:p-8 shadow-card border border-slate-100 transition-all duration-300 ${
+            index === 0 ? 'block' : 'hidden'
+          }`}
+          role="tabpanel"
+          aria-labelledby={`tab-${role}`}
+        >
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <!-- Role Icon & Title -->
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center">
+                {role === 'ceo' && (
+                  <svg class="w-8 h-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                    <path d="M12 3v1M12 21v-6"/>
+                  </svg>
+                )}
+                {role === 'cfo' && (
+                  <svg class="w-8 h-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                )}
+                {role === 'coo' && (
+                  <svg class="w-8 h-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                )}
+                {role === 'nursingDirector' && (
+                  <svg class="w-8 h-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                  </svg>
+                )}
+                {role === 'hr' && (
+                  <svg class="w-8 h-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                )}
+                {role === 'procurement' && (
+                  <svg class="w-8 h-8 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                  </svg>
+                )}
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="flex-grow">
+              <h4 class="text-lg font-display font-semibold text-slate-900 mb-3">
+                {t(`useCases.roles.${role}.title`, locale)}
+              </h4>
+
+              <!-- Query Example -->
+              <div class="bg-slate-50 rounded-xl p-4 mb-4 border-s-4 border-s-cyan-400">
+                <p class="text-slate-700 font-mono text-sm">
+                  "{t(`useCases.roles.${role}.query`, locale)}"
+                </p>
+              </div>
+
+              <!-- Value Proposition -->
+              <div class="flex items-center gap-2 text-sm text-teal-700">
+                <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <span class="font-medium">{t(`useCases.roles.${role}.value`, locale)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Before/After Comparison -->
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-4">
+        <!-- Before -->
+        <div class="bg-slate-200/50 rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-slate-300 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+            </div>
+            <h4 class="font-display font-semibold text-slate-700">
+              {t('useCases.transformation.before.title', locale)}
+            </h4>
+          </div>
+          <ul class="space-y-2">
+            {beforeItems && beforeItems.map((item: string) => (
+              <li class="flex items-center gap-2 text-slate-600 text-sm">
+                <svg class="w-4 h-4 text-slate-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- After -->
+        <div class="bg-teal-700 rounded-2xl p-6 text-white shadow-lg">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h4 class="font-display font-semibold">
+              {t('useCases.transformation.after.title', locale)}
+            </h4>
+          </div>
+          <ul class="space-y-2">
+            {afterItems && afterItems.map((item: string) => (
+              <li class="flex items-center gap-2 text-teal-100 text-sm">
+                <svg class="w-4 h-4 text-cyan-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  // Tab switching functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.role-tab');
+    const panels = document.querySelectorAll('.role-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const role = tab.getAttribute('data-role');
+
+        // Update tabs
+        tabs.forEach(t => {
+          t.classList.remove('bg-teal-700', 'text-white', 'shadow-md');
+          t.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+        tab.classList.add('bg-teal-700', 'text-white', 'shadow-md');
+        tab.setAttribute('aria-selected', 'true');
+
+        // Update panels
+        panels.forEach(panel => {
+          if (panel.id === `panel-${role}`) {
+            panel.classList.remove('hidden');
+            panel.classList.add('block');
+          } else {
+            panel.classList.remove('block');
+            panel.classList.add('hidden');
+          }
+        });
+      });
+    });
+  });
+</script>

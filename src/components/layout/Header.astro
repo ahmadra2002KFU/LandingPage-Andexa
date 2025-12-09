@@ -1,0 +1,202 @@
+---
+import Container from '../common/Container.astro';
+import Button from '../common/Button.astro';
+import { t, getLocaleDisplayName, getAlternateLocale, getLocalizedPath, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const altLocale = getAlternateLocale(locale);
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { key: 'features', href: '#features' },
+  { key: 'howItWorks', href: '#how-it-works' },
+  { key: 'security', href: '#security' },
+  { key: 'pricing', href: '#pricing' },
+];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  id="site-header"
+>
+  <div class="glass border-b border-slate-200/50">
+    <Container size="full">
+      <nav class="flex items-center justify-between h-16 md:h-20" aria-label="Main navigation">
+        <!-- Logo -->
+        <a href={locale === 'ar' ? '/ar/' : '/'} class="flex items-center gap-2 shrink-0">
+          <img
+            src="/assets/images/logo.png"
+            alt="ANDEXA"
+            class="h-8 md:h-10 w-auto"
+            loading="eager"
+          />
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex items-center gap-8">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class="text-sm font-medium text-slate-700 hover:text-teal-700 transition-colors relative group"
+            >
+              {t(`nav.${item.key}`, locale)}
+              <span class="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-teal-500 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+            </a>
+          ))}
+        </div>
+
+        <!-- Right Side Actions -->
+        <div class="flex items-center gap-3">
+          <!-- Language Switcher -->
+          <a
+            href={getLocalizedPath(currentPath, altLocale)}
+            class="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-600 hover:text-teal-700 hover:bg-teal-50 rounded-lg transition-colors"
+            aria-label={`Switch to ${getLocaleDisplayName(altLocale)}`}
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <span>{getLocaleDisplayName(altLocale)}</span>
+          </a>
+
+          <!-- CTA Button (Desktop) -->
+          <div class="hidden md:block">
+            <Button href="#contact" size="sm">
+              {t('nav.requestDemo', locale)}
+              <svg class="w-4 h-4 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Button>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button
+            type="button"
+            class="lg:hidden flex items-center justify-center w-10 h-10 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label="Toggle menu"
+            id="mobile-menu-button"
+          >
+            <svg class="w-6 h-6 menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg class="w-6 h-6 close-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </Container>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden fixed inset-x-0 top-16 md:top-20 bottom-0 bg-white/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-in-out z-40"
+    aria-hidden="true"
+  >
+    <Container class="py-6">
+      <nav class="flex flex-col gap-2">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class="mobile-nav-link flex items-center justify-between px-4 py-3 text-lg font-medium text-slate-800 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors"
+          >
+            {t(`nav.${item.key}`, locale)}
+            <svg class="w-5 h-5 text-slate-400 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        ))}
+
+        <div class="mt-4 pt-4 border-t border-slate-200">
+          <Button href="#contact" class="w-full justify-center">
+            {t('nav.requestDemo', locale)}
+          </Button>
+        </div>
+      </nav>
+    </Container>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = menuButton?.querySelector('.menu-icon');
+  const closeIcon = menuButton?.querySelector('.close-icon');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  let isMenuOpen = false;
+
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+
+    if (isMenuOpen) {
+      mobileMenu?.classList.remove('translate-x-full');
+      mobileMenu?.classList.add('translate-x-0');
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileMenu?.classList.add('translate-x-full');
+      mobileMenu?.classList.remove('translate-x-0');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    menuButton?.setAttribute('aria-expanded', String(isMenuOpen));
+    mobileMenu?.setAttribute('aria-hidden', String(!isMenuOpen));
+  }
+
+  menuButton?.addEventListener('click', toggleMenu);
+
+  // Close menu when clicking on a nav link
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (isMenuOpen) toggleMenu();
+    });
+  });
+
+  // Header shrink on scroll
+  const header = document.getElementById('site-header');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > 50) {
+      header?.classList.add('shadow-sm');
+    } else {
+      header?.classList.remove('shadow-sm');
+    }
+
+    lastScroll = currentScroll;
+  }, { passive: true });
+</script>
+
+<style>
+  /* Smooth menu transition */
+  #mobile-menu {
+    will-change: transform;
+  }
+
+  /* Active nav link indicator */
+  .nav-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: theme('colors.teal.500');
+    border-radius: 1px;
+  }
+</style>
