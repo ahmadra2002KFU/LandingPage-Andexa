@@ -125,7 +125,7 @@
     "roles": {
       "ceo": {
         "title": "CEO",
-        "query": "Compare revenue per bed across all departments this quarter",
+        "query": "Compare revenue by region across all departments this quarter",
         "value": "Strategic oversight in real-time"
       },
       "cfo": {
@@ -133,15 +133,15 @@
         "query": "Show me top 5 cost overruns vs. budget YTD",
         "value": "Instant financial visibility"
       },
-      "coo": {
-        "title": "COO",
-        "query": "What's our average patient wait time by department this month?",
-        "value": "Operational efficiency tracking"
+      "qualityManager": {
+        "title": "Quality Manager",
+        "query": "Show defect rates vs. production volume by department this quarter",
+        "value": "Process quality optimization"
       },
-      "nursingDirector": {
-        "title": "Nursing Director",
-        "query": "Staff overtime vs. patient volume—last 30 days",
-        "value": "Data-driven rostering decisions"
+      "operationsManager": {
+        "title": "Operations Manager",
+        "query": "Staff overtime vs. workload—last 30 days",
+        "value": "Data-driven scheduling decisions"
       },
       "hr": {
         "title": "HR Manager",
@@ -150,7 +150,7 @@
       },
       "procurement": {
         "title": "Procurement",
-        "query": "Which consumables exceeded reorder thresholds this month?",
+        "query": "Which supplies exceeded reorder thresholds this month?",
         "value": "Inventory optimization"
       }
     },

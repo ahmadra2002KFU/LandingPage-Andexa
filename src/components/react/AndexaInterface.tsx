@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import gsap from 'gsap';
 
 // ============================================================================
 // Icon Components (replicate Material Symbols)
@@ -163,8 +164,11 @@ const Modal: React.FC<{
 // ============================================================================
 const AndexaInterface: React.FC = () => {
     // Sidebar State
-    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(true); // Start collapsed for cleaner demo
     const [isMobile, setIsMobile] = useState(false);
+
+    // Animation State
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     // File Info State
     const [fileInfo, setFileInfo] = useState<FileInfo>({ rows: '-', columns: '-', size: '-' });
@@ -202,6 +206,15 @@ const AndexaInterface: React.FC = () => {
     // Refs
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Animation Refs
+    const containerRef = useRef<HTMLDivElement>(null);
+    const cardContentRef = useRef<HTMLDivElement>(null);
+    const browserChromeRef = useRef<HTMLDivElement>(null);
+    const sidebarRef = useRef<HTMLElement>(null);
+    const mainContentRef = useRef<HTMLElement>(null);
+    const demoButtonRef = useRef<HTMLButtonElement>(null);
+    const rippleContainerRef = useRef<HTMLSpanElement>(null);
 
     // Check mobile on mount and resize
     useEffect(() => {
@@ -344,6 +357,142 @@ const AndexaInterface: React.FC = () => {
         };
         return configs[type] || { title: 'Custom Connection', icon: 'cable', subtitle: 'Configure custom data source' };
     };
+
+    // ========================================================================
+    // Premium Button Animation Handlers
+    // ========================================================================
+
+    // Magnetic hover effect - button subtly follows cursor
+    const handleButtonMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        if (!demoButtonRef.current || isTransitioning) return;
+
+        const rect = demoButtonRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        gsap.to(demoButtonRef.current, {
+            x: x * 0.15,
+            y: y * 0.15,
+            duration: 0.4,
+            ease: 'power2.out'
+        });
+    }, [isTransitioning]);
+
+    // Reset button position on mouse leave with elastic effect
+    const handleButtonMouseLeave = useCallback(() => {
+        if (!demoButtonRef.current) return;
+
+        gsap.to(demoButtonRef.current, {
+            x: 0,
+            y: 0,
+            duration: 0.6,
+            ease: 'elastic.out(1, 0.4)'
+        });
+    }, []);
+
+    // Create ripple effect at click position
+    const createRipple = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        if (!rippleContainerRef.current || !demoButtonRef.current) return;
+
+        const rect = demoButtonRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple-effect';
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+
+        rippleContainerRef.current.appendChild(ripple);
+
+        gsap.fromTo(ripple,
+            { scale: 0, opacity: 0.6 },
+            {
+                scale: 4,
+                opacity: 0,
+                duration: 0.6,
+                ease: 'power2.out',
+                onComplete: () => ripple.remove()
+            }
+        );
+    }, []);
+
+    // Main demo activation with staged reveal animation
+    const handleDemoActivation = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
+
+        // Create ripple effect
+        createRipple(e);
+
+        // Button press animation
+        const buttonTl = gsap.timeline();
+        buttonTl
+            .to(demoButtonRef.current, {
+                scale: 0.92,
+                duration: 0.1,
+                ease: 'power2.in'
+            })
+            .to(demoButtonRef.current, {
+                scale: 1.05,
+                duration: 0.15,
+                ease: 'power2.out'
+            })
+            .to(demoButtonRef.current, {
+                scale: 1,
+                opacity: 0,
+                duration: 0.2,
+                ease: 'power2.out',
+                onComplete: () => {
+                    // Trigger the demo state change after button animation
+                    setIsDemoActive(true);
+                    runStagedReveal();
+                }
+            });
+    }, [isTransitioning, createRipple]);
+
+    // Staged reveal animation sequence
+    const runStagedReveal = useCallback(() => {
+        // Small delay to let React render the demo content
+        setTimeout(() => {
+            const tl = gsap.timeline({
+                onComplete: () => setIsTransitioning(false)
+            });
+
+            // Phase 1: Browser chrome slides in from top
+            if (browserChromeRef.current) {
+                gsap.set(browserChromeRef.current, { y: -50, opacity: 0 });
+                tl.to(browserChromeRef.current, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                }, 0.1);
+            }
+
+            // Phase 2: Sidebar slides in from left with overshoot
+            if (sidebarRef.current) {
+                gsap.set(sidebarRef.current, { x: -300, opacity: 0 });
+                tl.to(sidebarRef.current, {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: 'back.out(1.2)'
+                }, 0.2);
+            }
+
+            // Phase 3: Main content fades up
+            if (mainContentRef.current) {
+                gsap.set(mainContentRef.current, { y: 30, opacity: 0 });
+                tl.to(mainContentRef.current, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                }, 0.35);
+            }
+        }, 50);
+    }, []);
 
     return (
         <>
@@ -564,7 +713,7 @@ const AndexaInterface: React.FC = () => {
                 .sidebar-collapsed {
                     transform: translateX(-100%);
                 }
-                
+
                 @media (min-width: 768px) {
                     .sidebar-collapsed {
                         width: 0;
@@ -573,33 +722,130 @@ const AndexaInterface: React.FC = () => {
                         transform: none;
                     }
                 }
+
+                /* ============================================
+                   Premium Button Animations
+                   ============================================ */
+
+                /* Shimmer light sweep effect */
+                @keyframes shimmer {
+                    0% { transform: translateX(-100%); }
+                    50%, 100% { transform: translateX(100%); }
+                }
+
+                /* Glow pulse breathing effect */
+                @keyframes pulse-glow {
+                    0%, 100% {
+                        box-shadow:
+                            0 0 0 0 rgba(30, 95, 116, 0.4),
+                            0 4px 14px -2px rgba(30, 95, 116, 0.3);
+                    }
+                    50% {
+                        box-shadow:
+                            0 0 0 8px rgba(30, 95, 116, 0),
+                            0 8px 24px -2px rgba(30, 95, 116, 0.4);
+                    }
+                }
+
+                /* Ripple effect for button clicks */
+                .ripple-effect {
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%) scale(0);
+                    pointer-events: none;
+                }
+
+                /* Premium demo button styles */
+                .demo-button-premium {
+                    position: relative;
+                    background: linear-gradient(135deg, #1E5F74 0%, #14B8A6 100%);
+                    animation: pulse-glow 2.5s ease-in-out infinite;
+                    will-change: transform;
+                    backface-visibility: hidden;
+                }
+
+                .demo-button-premium:hover {
+                    animation-play-state: paused;
+                }
+
+                /* Shimmer overlay layer */
+                .shimmer-layer {
+                    position: absolute;
+                    inset: 0;
+                    overflow: hidden;
+                    border-radius: inherit;
+                    pointer-events: none;
+                }
+
+                .shimmer-layer::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(
+                        90deg,
+                        transparent 0%,
+                        rgba(255, 255, 255, 0.25) 50%,
+                        transparent 100%
+                    );
+                    animation: shimmer 2.5s ease-in-out infinite;
+                }
+
+                /* Glow effect on hover */
+                .glow-layer {
+                    position: absolute;
+                    inset: -2px;
+                    background: linear-gradient(135deg, #1E5F74 0%, #14B8A6 100%);
+                    border-radius: inherit;
+                    z-index: -1;
+                    filter: blur(12px);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+
+                .demo-button-premium:hover .glow-layer {
+                    opacity: 0.6;
+                }
+
+                /* Performance optimization */
+                .will-change-transform {
+                    will-change: transform;
+                    backface-visibility: hidden;
+                }
             `}</style>
 
 
             <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center transition-all duration-700 ease-in-out">
                 {/* Expandable Container */}
                 <div
+                    ref={containerRef}
                     className={`
-                        relative bg-white shadow-2xl overflow-hidden border border-gray-200 
-                        transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)
-                        ${isDemoActive ? 'w-full rounded-2xl' : 'w-full max-w-lg rounded-xl hover:shadow-xl hover:scale-[1.02] cursor-default'}
+                        relative bg-white shadow-2xl overflow-hidden border border-gray-200
+                        transition-all duration-500 ease-out
+                        ${isDemoActive ? 'w-full max-w-6xl rounded-2xl' : 'w-full max-w-lg rounded-xl hover:shadow-xl hover:scale-[1.02]'}
                     `}
                     style={{
-                        height: isDemoActive ? '800px' : 'auto'
+                        height: isDemoActive ? 'min(800px, 85vh)' : 'auto'
                     }}
                 >
+                    {/* Card Content - Initial View */}
                     {!isDemoActive && (
-                        <div className="p-8 flex flex-col items-center text-center space-y-6 bg-gradient-to-br from-white to-gray-50">
-                            <div className="h-16 w-16 bg-gradient-to-br from-[#1E5F74] to-[#14B8A6] rounded-2xl flex items-center justify-center shadow-lg mb-2">
-                                <svg viewBox="0 0 40 40" className="w-10 h-10">
-                                    <circle cx="20" cy="8" r="3" fill="white" />
-                                    <circle cx="8" cy="28" r="3" fill="white" />
-                                    <circle cx="32" cy="28" r="3" fill="white" />
-                                    <circle cx="20" cy="20" r="3" fill="white" />
-                                    <line x1="20" y1="8" x2="20" y2="20" stroke="white" strokeWidth="1.5" />
-                                    <line x1="8" y1="28" x2="20" y2="20" stroke="white" strokeWidth="1.5" />
-                                    <line x1="32" y1="28" x2="20" y2="20" stroke="white" strokeWidth="1.5" />
-                                </svg>
+                        <div
+                            ref={cardContentRef}
+                            className="p-8 flex flex-col items-center text-center space-y-6 bg-white"
+                        >
+                            {/* Andexa Logo */}
+                            <div className="mb-2">
+                                <img
+                                    src="/assets/images/andexa-logo.png"
+                                    alt="ANDEXA"
+                                    className="h-16 w-auto"
+                                />
                             </div>
 
                             <div className="space-y-2">
@@ -609,24 +855,40 @@ const AndexaInterface: React.FC = () => {
                                 </p>
                             </div>
 
+                            {/* Premium Animated Button */}
                             <button
-                                onClick={() => setIsDemoActive(true)}
-                                className="group relative overflow-hidden rounded-full bg-[#1E5F74] text-white px-8 py-3 font-semibold transition-all duration-300 hover:bg-[#153E4D] hover:shadow-lg hover:shadow-[#1E5F74]/30 active:scale-95"
+                                ref={demoButtonRef}
+                                onClick={handleDemoActivation}
+                                onMouseMove={handleButtonMouseMove}
+                                onMouseLeave={handleButtonMouseLeave}
+                                className="demo-button-premium group relative overflow-hidden rounded-full text-white px-8 py-4 font-semibold"
                             >
-                                <span className="relative z-10 flex items-center space-x-2">
+                                {/* Glow layer (appears on hover) */}
+                                <span className="glow-layer rounded-full" />
+
+                                {/* Shimmer effect layer */}
+                                <span className="shimmer-layer" />
+
+                                {/* Ripple container for click effects */}
+                                <span ref={rippleContainerRef} className="absolute inset-0 overflow-hidden rounded-full pointer-events-none" />
+
+                                {/* Button content */}
+                                <span className="relative z-10 flex items-center gap-2">
                                     <span>Test the Demo</span>
-                                    <Icon name="arrow_forward" className="text-lg transition-transform duration-300 group-hover:translate-x-1" />
+                                    <Icon name="arrow_forward" className="text-lg transition-transform duration-300 group-hover:translate-x-1.5" />
                                 </span>
                             </button>
                         </div>
                     )}
 
-                    {/* Browser Content - Only rendered/visible when active or animating */}
-                    <div
-                        className={`transition-opacity duration-700 delay-300 flex flex-col h-full ${isDemoActive ? 'opacity-100' : 'opacity-0 hidden'}`}
-                    >
+                    {/* Browser Content - Revealed with staged animation */}
+                    {isDemoActive && (
+                    <div className="flex flex-col h-full">
                         {/* Browser Toolbar/Chrome */}
-                        <div className="w-full h-11 bg-gray-100 border-b border-gray-200 flex items-center px-4 space-x-2 flex-shrink-0">
+                        <div
+                            ref={browserChromeRef}
+                            className="w-full h-11 bg-gray-100 border-b border-gray-200 flex items-center px-4 space-x-2 flex-shrink-0"
+                        >
                             <div className="flex space-x-1.5">
                                 <span className="w-3 h-3 rounded-full bg-[#FF5F57] border border-[#E0443E]"></span>
                                 <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]"></span>
@@ -652,6 +914,7 @@ const AndexaInterface: React.FC = () => {
 
                                 {/* Sidebar */}
                                 <aside
+                                    ref={sidebarRef}
                                     className={`${isMobile
                                         ? 'fixed top-0 left-0 h-full z-50'
                                         : 'relative'
@@ -690,52 +953,6 @@ const AndexaInterface: React.FC = () => {
                                                 </div>
                                             </SidebarSection>
 
-                                            {/* Data Connectors Section */}
-                                            <SidebarSection title="Data Connectors" icon="cable">
-                                                <div className="grid grid-cols-3 gap-2 mt-4">
-                                                    <ConnectorCard icon="database" name="SQL Database" colorClass="" onClick={() => openConnectorModal('sql')} />
-                                                    <ConnectorCard icon="add_to_drive" name="Google Drive" colorClass="" onClick={() => openConnectorModal('google-drive')} />
-                                                    <ConnectorCard icon="cloud_sync" name="OneDrive" colorClass="" onClick={() => openConnectorModal('onedrive')} />
-                                                    <ConnectorCard icon="cloud_circle" name="Amazon S3" colorClass="" onClick={() => openConnectorModal('s3')} />
-                                                    <ConnectorCard icon="api" name="REST API" colorClass="" onClick={() => openConnectorModal('api')} />
-                                                    <ConnectorCard icon="folder_shared" name="FTP/SFTP" colorClass="" onClick={() => openConnectorModal('ftp')} />
-                                                </div>
-                                                <button
-                                                    className="w-full text-xs px-3 py-2.5 mt-4 bg-[#14B8A6] text-white rounded-lg hover:bg-[#0D9488] transition-all duration-200 flex items-center justify-center space-x-1.5 shadow-sm hover:shadow-md"
-                                                    onClick={() => openConnectorModal('custom')}
-                                                >
-                                                    <Icon name="add_circle" className="text-sm" />
-                                                    <span className="font-medium">Add Connection</span>
-                                                </button>
-                                            </SidebarSection>
-
-                                            {/* LLM Provider Section */}
-                                            <SidebarSection title="LLM Provider" icon="smart_toy">
-                                                <div className="mt-3 space-y-2">
-                                                    <select
-                                                        value={provider}
-                                                        onChange={(e) => setProvider(e.target.value)}
-                                                        className="w-full text-xs px-3 py-2 bg-gray-100 text-gray-900 rounded border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1E5F74]/20"
-                                                    >
-                                                        <option value="groq">Groq (Kimi K2) - Cloud</option>
-                                                        <option value="lmstudio">LM Studio - Local</option>
-                                                        <option value="zai">Z.AI (GLM 4.6) - Cloud</option>
-                                                    </select>
-                                                    <div className="flex items-center justify-between text-xs">
-                                                        <span className="text-gray-500 ">Status:</span>
-                                                        <span className="flex items-center">
-                                                            <span className={`w-2 h-2 rounded-full mr-1 ${providerStatus === 'connected' ? 'bg-green-500' :
-                                                                providerStatus === 'disconnected' ? 'bg-red-500' : 'bg-amber-500'
-                                                                }`} />
-                                                            <span className="text-gray-700 ">
-                                                                {providerStatus === 'connected' ? 'Connected' :
-                                                                    providerStatus === 'disconnected' ? 'Disconnected' : 'Checking...'}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </SidebarSection>
-
                                             {/* Custom Rules Section */}
                                             <SidebarSection title="Custom Rules" icon="rule">
                                                 <button
@@ -768,12 +985,6 @@ const AndexaInterface: React.FC = () => {
                                                 </div>
                                             </SidebarSection>
 
-                                            {/* Settings Section */}
-                                            <SidebarSection title="Settings" icon="settings">
-                                                <div className="mt-3 space-y-2 text-xs text-gray-500 ">
-                                                    <p className="text-center py-2">Settings options coming soon</p>
-                                                </div>
-                                            </SidebarSection>
                                         </div>
 
                                         {/* New Chat Button */}
@@ -790,7 +1001,7 @@ const AndexaInterface: React.FC = () => {
                                 </aside>
 
                                 {/* Main Content */}
-                                <main className="flex-1 flex flex-col relative w-full overflow-hidden">
+                                <main ref={mainContentRef} className="flex-1 flex flex-col relative w-full overflow-hidden">
                                     {/* Header */}
                                     <header className="flex justify-between items-center p-4 relative z-30">
                                         <button
@@ -949,6 +1160,7 @@ const AndexaInterface: React.FC = () => {
                             </div>
                         </div>
                     </div>
+                    )}
                 </div>
             </div>
 
