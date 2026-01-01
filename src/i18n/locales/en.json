@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "ANDEXA | Sovereign AI Analytics for Saudi Healthcare",
-    "description": "ANDEXA is an on-premises AI analytics agent for Saudi hospitals. Ask your data questions in Arabic or English, get instant reports—100% sovereign, PDPL compliant."
+    "title": "ANDEXA | Sovereign AI Analytics for Saudi Enterprises",
+    "description": "ANDEXA is an on-premises AI analytics agent for Saudi organizations. Ask your data questions in Arabic or English, get instant reports—100% sovereign, PDPL compliant."
   },
   "nav": {
     "features": "Features",
@@ -15,7 +15,7 @@
   },
   "hero": {
     "headline": "Ask Your Data. Get Answers in Seconds.",
-    "subheadline": "ANDEXA is a sovereign AI analytics agent that turns your hospital's fragmented data into instant, actionable insights—100% on-premises, zero data egress.",
+    "subheadline": "ANDEXA is a sovereign AI analytics agent that turns your organization's fragmented data into instant, actionable insights—100% on-premises, zero data egress.",
     "cta": {
       "primary": "Request a Demo",
       "secondary": "See How It Works"
@@ -29,12 +29,12 @@
     },
     "organizational": {
       "title": "The Organizational Pain",
-      "description": "Non-technical staff—HR, Procurement, Head Nurses—cannot access data directly. They submit \"tickets\" to IT and wait 5+ days for simple reports.",
-      "quote": "A Nursing Director waits 5 days for a 'Staff Overtime vs. Patient Volume' report, delaying critical rostering decisions."
+      "description": "Non-technical staff—HR, Procurement, Department Heads—cannot access data directly. They submit \"tickets\" to IT and wait 5+ days for simple reports.",
+      "quote": "An Operations Director waits 5 days for a 'Staff Overtime vs. Workload Volume' report, delaying critical rostering decisions."
     },
     "regulatory": {
       "title": "The Regulatory Wall",
-      "description": "Public cloud AI (ChatGPT, Claude, etc.) is banned for patient data under PDPL. Hospitals are left with rigid, legacy tools that can't keep up."
+      "description": "Public cloud AI (ChatGPT, Claude, etc.) is banned for sensitive data under PDPL. Organizations are left with rigid, legacy tools that can't keep up."
     },
     "stat": {
       "value": "62%",
@@ -47,7 +47,7 @@
     "pillars": {
       "askData": {
         "title": "Ask Your Data",
-        "description": "Natural language queries for any authorized user—from CEO to Head Nurse. No SQL. No tickets. Just answers."
+        "description": "Natural language queries for any authorized user—from CEO to Department Head. No SQL. No tickets. Just answers."
       },
       "onPremises": {
         "title": "100% On-Premises",
@@ -55,7 +55,7 @@
       },
       "universal": {
         "title": "Universal Ingestion",
-        "description": "Connects to Excel, SQL, Oracle, HIS, ERP, HL7/FHIR—in minutes, not months."
+        "description": "Connects to Excel, SQL, Oracle, CRM, ERP, custom APIs—in minutes, not months."
       }
     },
     "dualInterface": {
@@ -74,15 +74,15 @@
     "steps": {
       "connect": {
         "title": "Connect",
-        "description": "ANDEXA ingests your existing data sources—Excel, SQL, Oracle, HIS, ERP, HL7/FHIR. No migration required. No disruption to your current systems."
+        "description": "ANDEXA ingests your existing data sources—Excel, SQL, Oracle, CRM, ERP, custom APIs. No migration required. No disruption to your current systems."
       },
       "ask": {
         "title": "Ask",
         "description": "Users query data in plain Arabic or English.",
         "examples": [
-          "Show ICU bed occupancy vs. staffing levels this week",
-          "What are the top 5 consumable costs in Emergency this month?",
-          "Compare revenue per bed across all departments this quarter"
+          "Show resource utilization vs. staffing levels this week",
+          "What are the top 5 consumable costs in Operations this month?",
+          "Compare revenue per unit across all departments this quarter"
         ]
       },
       "act": {
@@ -92,7 +92,7 @@
     }
   },
   "benefits": {
-    "headline": "Why Healthcare Leaders Choose ANDEXA",
+    "headline": "Why Business Leaders Choose ANDEXA",
     "items": {
       "itBacklog": {
         "title": "Reduce IT Backlog by 40%",
@@ -108,7 +108,7 @@
       },
       "rbac": {
         "title": "Role-Based Access",
-        "description": "Users only \"chat\" with data they're authorized to see. HR can't access clinical records. Full RBAC."
+        "description": "Users only \"chat\" with data they're authorized to see. HR can't access confidential records. Full RBAC."
       },
       "costAdvantage": {
         "title": "500x Cost Advantage",
@@ -190,7 +190,7 @@
       },
       "pdpl": {
         "title": "PDPL Compliant",
-        "description": "Native alignment with Saudi Arabia's Personal Data Protection Law. Patient data stays protected."
+        "description": "Native alignment with Saudi Arabia's Personal Data Protection Law. Sensitive data stays protected."
       },
       "nca": {
         "title": "NCA ECC Aligned",
@@ -224,7 +224,7 @@
       "subtitle": "ChatGPT, etc.",
       "values": {
         "dataSovereignty": "Data sent to US servers",
-        "pdplCompliance": "Banned for patient data",
+        "pdplCompliance": "Banned for sensitive data",
         "selfService": "Requires copy/paste",
         "setupTime": "Minutes",
         "costAtScale": "Token fees explode",
@@ -257,25 +257,25 @@
   },
   "vision2030": {
     "headline": "Built in Saudi Arabia, for Saudi Arabia",
-    "mission": "ANDEXA was designed from the ground up to meet the unique requirements of Saudi healthcare:",
+    "mission": "ANDEXA was designed from the ground up to meet the unique requirements of Saudi enterprises:",
     "points": [
       "Arabic-First NLP — Natural language processing optimized for Arabic queries and reports",
       "Full Data Sovereignty — Your data stays in the Kingdom, always",
-      "Vision 2030 Alignment — Supporting the National Transformation Program's digital health goals",
-      "Local Expertise — Built by a team that understands Saudi healthcare regulations and workflows"
+      "Vision 2030 Alignment — Supporting the National Transformation Program's digital transformation goals",
+      "Local Expertise — Built by a team that understands Saudi business regulations and workflows"
     ],
     "stats": {
       "investment": {
         "value": "SAR 214B+",
-        "label": "invested in health and social development"
+        "label": "invested in economic development"
       },
       "digitalHealth": {
         "value": "SAR 5.6B",
-        "label": "allocated to digital health transformation"
+        "label": "allocated to digital transformation"
       },
       "hospitals": {
-        "value": "516",
-        "label": "hospitals in the Kingdom"
+        "value": "10,000+",
+        "label": "enterprises in the Kingdom"
       },
       "aiAdoption": {
         "value": "81%",
@@ -306,7 +306,7 @@
       },
       {
         "question": "What data sources can ANDEXA connect to?",
-        "answer": "ANDEXA connects to virtually any structured data source: Excel, SQL databases, Oracle, HIS/EHR systems, ERP platforms, HL7/FHIR feeds, and REST APIs."
+        "answer": "ANDEXA connects to virtually any structured data source: Excel, SQL databases, Oracle, CRM systems, ERP platforms, custom APIs, and REST APIs."
       },
       {
         "question": "Is ANDEXA compliant with Saudi regulations?",
@@ -332,7 +332,7 @@
   },
   "cta": {
     "headline": "Ready to Unlock Your Data?",
-    "subheadline": "See how ANDEXA can transform your hospital's data into instant, actionable intelligence—without compromising on security.",
+    "subheadline": "See how ANDEXA can transform your organization's data into instant, actionable intelligence—without compromising on security.",
     "options": {
       "demo": "Request a Demo",
       "technical": "Download Technical Brief",

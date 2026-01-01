@@ -4,7 +4,7 @@
 
 export const BRAND = {
   name: 'ANDEXA',
-  tagline: 'Sovereign AI Analytics for Saudi Healthcare',
+  tagline: 'Sovereign AI Analytics for Saudi Enterprises',
   domain: 'andexa.tech',
   email: 'contact@andexa.tech',
 } as const;
@@ -79,7 +79,7 @@ export const SOCIAL_LINKS = {
 export const STATS = {
   itBacklogReduction: 40,
   costAdvantage: 500,
-  hospitalsInKSA: 516,
+  enterprisesInKSA: 10000,
   aiAdoptionRate: 81,
   privacyConcernRate: 62,
   investmentBillions: 214,
