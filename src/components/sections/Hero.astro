@@ -2,6 +2,7 @@
 import Container from '../common/Container.astro';
 import Button from '../common/Button.astro';
 import { t, type Locale } from '../../i18n/utils';
+import AndexaInterface from '../react/AndexaInterface.tsx';
 
 interface Props {
   locale?: Locale;
@@ -10,7 +11,7 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 ---
 
-<section class="relative min-h-[85vh] flex items-center pt-20 md:pt-24 overflow-hidden bg-cream-white">
+<section class="relative min-h-[85vh] flex items-center pt-20 md:pt-24 pb-20 md:pb-32 overflow-hidden bg-cream-white">
   <!-- Background Elements -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
     <!-- Blurred teal shape -->
@@ -31,7 +32,7 @@ const { locale = 'en' } = Astro.props;
   </div>
 
   <Container size="full" class="relative z-10">
-    <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-center py-8 lg:py-12">
+    <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-10 items-center py-8 lg:py-12">
       <!-- Content Column -->
       <div class="max-w-2xl">
         <!-- Headline -->
@@ -95,94 +96,15 @@ const { locale = 'en' } = Astro.props;
         </div>
       </div>
 
-      <!-- Video/Visual Column -->
+      <!-- Interactive Demo Column -->
       <div class="hero-visual relative opacity-0 animate-slide-right" style="animation-delay: 0.3s; animation-fill-mode: forwards;">
-        <!-- Device Frame -->
-        <div class="relative transform rotate-1 hover:rotate-0 transition-transform duration-500">
-          <!-- Shadow -->
-          <div class="absolute inset-0 bg-teal-900/20 rounded-2xl blur-2xl transform translate-y-4 scale-95"></div>
-
-          <!-- Frame -->
-          <div class="relative bg-slate-800 rounded-2xl p-2 shadow-hero-video">
-            <!-- Browser Chrome -->
-            <div class="flex items-center gap-2 px-3 py-2 bg-slate-700 rounded-t-xl">
-              <div class="flex gap-1.5">
-                <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                <div class="w-3 h-3 bg-green-400 rounded-full"></div>
-              </div>
-              <div class="flex-1 mx-4">
-                <div class="bg-slate-600 rounded-md px-3 py-1 text-xs text-slate-400 text-center">
-                  andexa.tech
-                </div>
-              </div>
-            </div>
-
-            <!-- Video Container -->
-            <div class="relative aspect-video bg-slate-900 rounded-b-xl overflow-hidden">
-              <!-- Poster Image (always visible as fallback) -->
-              <img
-                src="/assets/images/demo-poster.webp"
-                alt="ANDEXA Demo"
-                class="absolute inset-0 w-full h-full object-cover"
-                id="hero-poster"
-                loading="eager"
-              />
-
-              <!-- Video (lazy loaded) -->
-              <video
-                id="hero-video"
-                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="none"
-                poster="/assets/images/demo-poster.webp"
-              >
-                <source src="/assets/videos/Video-Demo.webm" type="video/webm" />
-                <source src="/assets/videos/Video-Demo.mp4" type="video/mp4" />
-              </video>
-
-              <!-- Play indicator overlay -->
-              <div id="video-play-overlay" class="absolute inset-0 flex items-center justify-center bg-slate-900/40 transition-opacity duration-300 cursor-pointer">
-                <div class="w-16 h-16 flex items-center justify-center bg-white/90 rounded-full shadow-lg hover:scale-110 transition-transform">
-                  <svg class="w-6 h-6 text-teal-700 ms-1" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="5 3 19 12 5 21 5 3"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Floating elements -->
-          <div class="absolute -top-4 -right-4 bg-white rounded-xl shadow-card p-3 animate-float">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center">
-                <svg class="w-4 h-4 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                  <polyline points="22 4 12 14.01 9 11.01"/>
-                </svg>
-              </div>
-              <div class="text-xs">
-                <div class="font-medium text-slate-800">{locale === 'ar' ? 'تقرير جاهز' : 'Report Ready'}</div>
-                <div class="text-slate-500">&lt; 5s</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-card p-3 animate-float delay-200">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
-                <svg class="w-4 h-4 text-cyan-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-              </div>
-              <div class="text-xs">
-                <div class="font-medium text-slate-800">{locale === 'ar' ? 'باللغة الطبيعية' : 'Natural Language'}</div>
-                <div class="text-slate-500">{locale === 'ar' ? 'عربي + إنجليزي' : 'AR + EN'}</div>
-              </div>
-            </div>
+        <div class="relative">
+          <!-- Subtle Shadow -->
+          <div class="absolute inset-2 bg-teal-900/10 rounded-xl blur-xl transform translate-y-2"></div>
+          
+          <!-- Demo Container -->
+          <div class="relative rounded-xl overflow-hidden shadow-lg">
+            <AndexaInterface client:visible />
           </div>
         </div>
       </div>
@@ -200,49 +122,7 @@ const { locale = 'en' } = Astro.props;
   </div>
 </section>
 
-<script>
-  // Video lazy loading and interaction
-  document.addEventListener('DOMContentLoaded', () => {
-    const video = document.getElementById('hero-video') as HTMLVideoElement;
-    const poster = document.getElementById('hero-poster');
-    const overlay = document.getElementById('video-play-overlay');
 
-    if (!video) return;
-
-    // Check for reduced motion preference
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      overlay?.classList.add('hidden');
-      return;
-    }
-
-    // Check connection speed
-    const connection = (navigator as any).connection;
-    if (connection?.saveData || connection?.effectiveType === '2g') {
-      return;
-    }
-
-    // Load and play video
-    const loadVideo = () => {
-      video.preload = 'auto';
-      video.load();
-
-      video.addEventListener('canplaythrough', () => {
-        video.classList.remove('opacity-0');
-        overlay?.classList.add('opacity-0', 'pointer-events-none');
-        video.play();
-      }, { once: true });
-    };
-
-    // Start loading after a short delay
-    setTimeout(loadVideo, 1000);
-
-    // Click overlay to play
-    overlay?.addEventListener('click', () => {
-      video.play();
-      overlay.classList.add('opacity-0', 'pointer-events-none');
-    });
-  });
-</script>
 
 <style>
   .hero-node {

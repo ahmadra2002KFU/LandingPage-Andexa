@@ -6,7 +6,6 @@ import Hero from '../components/sections/Hero.astro';
 import Problem from '../components/sections/Problem.astro';
 import Solution from '../components/sections/Solution.astro';
 import HowItWorks from '../components/sections/HowItWorks.astro';
-import AndexaInterface from '../components/react/AndexaInterface.tsx';
 import UseCases from '../components/sections/UseCases.astro';
 import Security from '../components/sections/Security.astro';
 import Comparison from '../components/sections/Comparison.astro';
@@ -25,7 +24,6 @@ const locale = 'en';
   <Problem locale={locale} />
   <Solution locale={locale} />
   <HowItWorks locale={locale} />
-  <AndexaInterface client:visible />
   <UseCases locale={locale} />
   <Security locale={locale} />
   <Comparison locale={locale} />

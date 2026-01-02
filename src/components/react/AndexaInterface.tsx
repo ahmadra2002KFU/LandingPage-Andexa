@@ -417,82 +417,57 @@ const AndexaInterface: React.FC = () => {
         );
     }, []);
 
-    // Main demo activation with staged reveal animation
-    const handleDemoActivation = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    // Power On Animation
+    const activateDemo = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         if (isTransitioning) return;
         setIsTransitioning(true);
 
-        // Create ripple effect
-        createRipple(e);
+        // createRipple(e); // Optional: keep ripple if desired, or let the button consume itself
 
-        // Button press animation
-        const buttonTl = gsap.timeline();
-        buttonTl
-            .to(demoButtonRef.current, {
-                scale: 0.92,
-                duration: 0.1,
-                ease: 'power2.in'
-            })
-            .to(demoButtonRef.current, {
-                scale: 1.05,
-                duration: 0.15,
-                ease: 'power2.out'
-            })
-            .to(demoButtonRef.current, {
-                scale: 1,
-                opacity: 0,
+        const button = demoButtonRef.current;
+        const overlay = button?.closest('.initial-overlay'); // We'll add this class to the overlay wrapper
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                setIsDemoActive(true);
+                setIsTransitioning(false);
+            }
+        });
+
+        // 1. Button interactions
+        if (button) {
+            tl.to(button, {
+                scale: 1.1,
                 duration: 0.2,
-                ease: 'power2.out',
-                onComplete: () => {
-                    // Trigger the demo state change after button animation
-                    setIsDemoActive(true);
-                    runStagedReveal();
-                }
-            });
-    }, [isTransitioning, createRipple]);
-
-    // Staged reveal animation sequence
-    const runStagedReveal = useCallback(() => {
-        // Small delay to let React render the demo content
-        setTimeout(() => {
-            const tl = gsap.timeline({
-                onComplete: () => setIsTransitioning(false)
-            });
-
-            // Phase 1: Browser chrome slides in from top
-            if (browserChromeRef.current) {
-                gsap.set(browserChromeRef.current, { y: -50, opacity: 0 });
-                tl.to(browserChromeRef.current, {
-                    y: 0,
-                    opacity: 1,
+                ease: 'back.out(1.7)'
+            })
+                .to(button, {
+                    scale: 0,
+                    opacity: 0,
                     duration: 0.3,
-                    ease: 'power2.out'
-                }, 0.1);
-            }
+                    ease: 'power2.in'
+                }, '>');
+        }
 
-            // Phase 2: Sidebar slides in from left with overshoot
-            if (sidebarRef.current) {
-                gsap.set(sidebarRef.current, { x: -300, opacity: 0 });
-                tl.to(sidebarRef.current, {
-                    x: 0,
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: 'back.out(1.2)'
-                }, 0.2);
-            }
+        // 2. Overlay fade out & Content Power Up
+        // We'll trust React state change to handle the removal of overlay code-wise, 
+        // but for smooth animation we might want to animate opacity first if strictly controlled.
+        // However, since we are switching `isDemoActive`, let's just use the state switch and CSS transitions 
+        // effectively, OR animate logic values.
 
-            // Phase 3: Main content fades up
-            if (mainContentRef.current) {
-                gsap.set(mainContentRef.current, { y: 30, opacity: 0 });
-                tl.to(mainContentRef.current, {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.4,
-                    ease: 'power2.out'
-                }, 0.35);
-            }
-        }, 50);
-    }, []);
+        // Simpler approach: 
+        // Just trigger the state change, but let's delay it slightly to allow button animation to finish?
+        // Actually, let's just set state and let CSS handle the transition of the "blur" class.
+        // But we need the overlay to fade out.
+
+        // Let's rely on the state switch triggering a CSS transition on the overlay if it was present.
+        // But since we are unmounting the overlay based on `!isDemoActive`, we can't animate it out easily without 
+        // keeping it mounted or using AnimatePresence (which we don't have).
+
+        // Alternative: Keep overlay mounted but change opacity to 0, then unmount after delay?
+        // Let's just animate the button out, then trigger state.
+
+    }, [isTransitioning]);
 
     return (
         <>
@@ -821,23 +796,33 @@ const AndexaInterface: React.FC = () => {
 
 
             <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center transition-all duration-700 ease-in-out">
-                {/* Expandable Container */}
+                {/* Main Container */}
                 <div
                     ref={containerRef}
                     className={`
                         relative bg-white shadow-2xl overflow-hidden border border-gray-200
-                        transition-all duration-500 ease-out
-                        ${isDemoActive ? 'w-full max-w-6xl rounded-2xl' : 'w-full max-w-lg rounded-xl hover:shadow-xl hover:scale-[1.02]'}
+                        transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+                        w-full max-w-6xl rounded-2xl
                     `}
                     style={{
-                        height: isDemoActive ? 'min(800px, 85vh)' : 'auto'
+                        height: 'min(800px, 85vh)'
                     }}
                 >
-                    {/* Card Content - Initial View */}
-                    {!isDemoActive && (
+                    {/* Overlay / Initial View */}
+                    <div
+                        className={`
+                            absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/60 backdrop-blur-sm
+                            transition-all duration-500 ease-out
+                            ${isDemoActive ? 'opacity-0 pointer-events-none' : 'opacity-100'}
+                        `}
+                    >
                         <div
                             ref={cardContentRef}
-                            className="p-8 flex flex-col items-center text-center space-y-6 bg-white"
+                            className={`
+                                p-8 flex flex-col items-center text-center space-y-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-white/50
+                                transition-all duration-500 transform
+                                ${isDemoActive ? 'scale-110 opacity-0' : 'scale-100 opacity-100'}
+                            `}
                         >
                             {/* Andexa Logo */}
                             <div className="mb-2">
@@ -858,10 +843,10 @@ const AndexaInterface: React.FC = () => {
                             {/* Premium Animated Button */}
                             <button
                                 ref={demoButtonRef}
-                                onClick={handleDemoActivation}
+                                onClick={activateDemo}
                                 onMouseMove={handleButtonMouseMove}
                                 onMouseLeave={handleButtonMouseLeave}
-                                className="demo-button-premium group relative overflow-hidden rounded-full text-white px-8 py-4 font-semibold"
+                                className="demo-button-premium group relative overflow-hidden rounded-full text-white px-8 py-4 font-semibold shadow-lg hover:shadow-xl transition-shadow"
                             >
                                 {/* Glow layer (appears on hover) */}
                                 <span className="glow-layer rounded-full" />
@@ -879,11 +864,15 @@ const AndexaInterface: React.FC = () => {
                                 </span>
                             </button>
                         </div>
-                    )}
+                    </div>
 
-                    {/* Browser Content - Revealed with staged animation */}
-                    {isDemoActive && (
-                    <div className="flex flex-col h-full">
+                    {/* Browser Content - Always rendered but blurred/dimmed initially */}
+                    <div
+                        className={`
+                            flex flex-col h-full transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)]
+                            ${!isDemoActive ? 'filter blur-sm scale-[0.98] opacity-40 grayscale-[0.3]' : 'filter-none scale-100 opacity-100 grayscale-0'}
+                        `}
+                    >
                         {/* Browser Toolbar/Chrome */}
                         <div
                             ref={browserChromeRef}
@@ -1160,7 +1149,6 @@ const AndexaInterface: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    )}
                 </div>
             </div>
 
