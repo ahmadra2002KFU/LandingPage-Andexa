@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import Hero from '../../components/sections/Hero.astro';
+import SuccessPartners from '../../components/sections/SuccessPartners.astro';
 import Problem from '../../components/sections/Problem.astro';
 import Solution from '../../components/sections/Solution.astro';
 import HowItWorks from '../../components/sections/HowItWorks.astro';
@@ -22,6 +23,7 @@ const locale = 'ar';
   <Header slot="header" locale={locale} />
 
   <Hero locale={locale} />
+  <SuccessPartners locale={locale} />
   <Problem locale={locale} />
   <Solution locale={locale} />
   <HowItWorks locale={locale} />

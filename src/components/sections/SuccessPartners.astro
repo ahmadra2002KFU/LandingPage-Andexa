@@ -1,0 +1,47 @@
+---
+import Container from '../common/Container.astro';
+import { t, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+
+const partners = [
+  {
+    name: locale === 'ar' ? 'مستشفى الملك فيصل التخصصي ومركز الأبحاث' : 'King Faisal Specialist Hospital & Research Centre',
+    logo: '/assets/images/KFSHRC.png',
+    alt: 'KFSHRC Logo',
+    height: 'h-16 md:h-20'
+  },
+  {
+    name: locale === 'ar' ? 'مركز ريادة الأعمال الرقمية' : 'Center of Digital Entrepreneurship',
+    logo: '/assets/images/CODE.png',
+    alt: 'CODE Logo',
+    height: 'h-12 md:h-16' // Adjusted visually as CODE logo tends to be wider/shorter
+  }
+];
+---
+
+<section class="py-12 border-b border-gray-100 bg-white">
+  <Container>
+    <div class="text-center mb-10">
+      <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">
+        {t('successPartners.headline', locale)}
+      </h2>
+    </div>
+
+    <div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 grayscale-0 transition-all duration-500">
+      {partners.map(partner => (
+        <div class="group relative flex items-center justify-center p-4 transition-all duration-300 hover:scale-105">
+           <img
+            src={partner.logo}
+            alt={partner.alt}
+            class={`${partner.height} w-auto object-contain transition-all duration-300 filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100`}
+          />
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
